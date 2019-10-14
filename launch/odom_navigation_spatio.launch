@@ -1,0 +1,7 @@
+<launch>
+
+ <include file="$(find navigation_uao)/launch/include/move_base_spatio.launch">
+
+  </include>
+
+</launch>

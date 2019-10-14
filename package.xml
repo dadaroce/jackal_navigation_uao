@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<package>
+	<name>navigation_uao</name>
+	<version>0.0.0</version>
+	<description>Autonomous navigation Jackal_uao</description>
+	<author email="davidson.rojas@uao.edu.co">Davidson Rojas Cediel</author>
+	<author email="andres_f.cerquera@uao.edu.co">Andres Felipe Cerquera</author>
+	<maintainer email="davidson.rojas@uao.edu.co"></maintainer>
+	<maintainer email="andres_f.cerquera@uao.edu.co"></maintainer>
+
+
+	<license>BSD</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+	<build_depend>roslaunch</build_depend>
+
+
+	<build_depend>cmake_modules</build_depend>
+	<build_depend>tf</build_depend>
+	<build_depend>costmap_2d</build_depend>
+	<build_depend>nav_core</build_depend>
+	<build_depend>pluginlib</build_depend>
+	<build_depend>eigen</build_depend>
+	<build_depend>dynamic_reconfigure</build_depend>
+
+	<build_depend>roscpp</build_depend>
+	<build_depend>rospy</build_depend>
+	<build_depend>message_generation</build_depend>
+	<build_depend>geometry_msgs</build_depend>
+	<build_depend>std_msgs</build_depend>
+	<build_depend>sensor_msgs</build_depend>
+	<build_depend>pcl_ros</build_depend>
+	<build_depend>pcl_conversions</build_depend>
+	<build_depend>pcl_msgs</build_depend>
+	<build_depend>nav_msgs</build_depend>
+	<build_depend>libpcl-all-dev</build_depend>
+	<build_depend>octomap</build_depend>
+	<build_depend>nodelet</build_depend>
+	<build_depend>pointcloud_to_laserscan</build_depend>
+	<build_depend>spatio_temporal_voxel_layer</build_depend>
+
+
+
+	<run_depend>amcl</run_depend>
+	<run_depend>gmapping</run_depend>
+	<run_depend>map_server</run_depend>
+	<run_depend>move_base</run_depend>
+	<run_depend>urdf</run_depend>
+	<run_depend>xacro</run_depend>
+
+
+
+
+	<run_depend>tf</run_depend>
+	<run_depend>costmap_2d</run_depend>
+	<run_depend>nav_core</run_depend>
+	<run_depend>pluginlib</run_depend>
+	<run_depend>eigen</run_depend>
+	<run_depend>nodelet</run_depend>
+	<run_depend>dynamic_reconfigure</run_depend>
+
+	<run_depend>roscpp</run_depend>
+	<run_depend>rospy</run_depend>
+	<run_depend>message_runtime</run_depend>
+	<run_depend>geometry_msgs</run_depend>
+	<run_depend>sensor_msgs</run_depend>
+	<run_depend>std_msgs</run_depend>
+	<run_depend>libpcl-all</run_depend>
+	<run_depend>pcl_msgs</run_depend>
+	<run_depend>nav_msgs</run_depend>
+	<run_depend>pcl_conversions</run_depend>
+	<run_depend>pcl_ros</run_depend>
+	<run_depend>octomap</run_depend>
+
+	<run_depend>pointcloud_to_laserscan</run_depend>
+	<run_depend>spatio_temporal_voxel_layer</run_depend>
+
+	<export>
+
+	</export>
+</package>

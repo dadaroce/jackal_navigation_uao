@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node pkg="nodelet" type="nodelet" name="nodelet_manager" args="manager" output="screen"/>
+
+
+  <!-- make a "box" for filter data -->
+  <node pkg="nodelet" type="nodelet" name="cropbox" args="load pcl/CropBox nodelet_manager" output="screen">
+    <remap from="~input" to="/velodyne_points" />
+    <remap from="~output" to="/velodyne_points/cropbox" />	
+    <rosparam>
+      min_x: -20.12
+      max_x: 19.88
+      min_y: -20.0
+      max_y: 20.0
+      min_z: -1
+      max_z: 0.25
+    </rosparam>
+  </node>
+
+  <!-- get rid of pesky noise using radius outlier filter -->
+  <node pkg="nodelet" type="nodelet" name="radius_outlier_removal" args="load pcl/RadiusOutlierRemoval nodelet_manager" output="screen">
+    <remap from="~input" to="/velodyne_points/cropbox" />
+    <remap from="~output" to="/velodyne_points/no_outliers" />			
+    <rosparam>
+      radius_search: 0.05 <!-- # must have min_neighbors w/in this radius to survive -->
+      min_neighbors: 8 <!--  # any lower than this, and phantom points might start popping up at Jackal's rear driver's side corner -->
+    </rosparam>
+  </node>
+
+  <!-- downsample and clean NaNs -->
+  <node pkg="nodelet" type="nodelet" name="voxel" args="load pcl/VoxelGrid nodelet_manager" output="screen">
+    <remap from="~input" to="/velodyne_points/no_outliers" />
+    <remap from="~output" to="/velodyne_points/voxeled" />
+    <rosparam>
+      filter_field_name: z
+      filter_limit_min: -0.338
+      filter_limit_max: 0.112
+      leaf_size: 0.025
+      filter_limit_negative: False
+    </rosparam>
+  </node>
+
+
+
+
+
+
+    <!-- run pointcloud_to_laserscan node -->
+   <node pkg="nodelet" type="nodelet" name="laserscan_to_pointcloud_velodyne" args="load pointcloud_to_laserscan/pointcloud_to_laserscan_nodelet nodelet_manager">
+
+        <remap from="cloud_in" to="/velodyne_points/voxeled"/>
+        <remap from="scan" to="scan2"/>
+        <rosparam>
+      target_frame: velodyne <!-- transform the pointcloud into this frame before converting to a laser scan -->
+
+      <!-- get these limits out of the way since we're using a cropboxed cloud input already -->
+      min_height: -99.0
+      max_height: 99.0
+      range_min: 0.05
+      range_max: 99.0
+
+      angle_min: -3.1415
+      angle_max: 3.1415
+      angle_increment: 0.01 <!-- too high and Jackal think's there are gaps in the wall it's driving next to that it can fit through, leading to a crash -->
+      scan_time: 0.1 <!-- time between scans (in seconds) -->
+      concurrency_level: 0 <!-- Number of threads to use for processing pointclouds. If 0, automatically detect number of cores and use the equivalent number of threads. Input queue size for pointclouds is tied to this parameter. In nodelet form, number of threads is capped by the nodelet manager configuration. -->
+      use_inf: false <!-- If disabled, report infinite range (no obstacle) as range_max + 1. Otherwise report infinite range as +inf. Associated with the inf_is_valid parameter for costmap_2d obstacle layers. -->
+        </rosparam>
+
+    </node>
+
+
+
+</launch>
